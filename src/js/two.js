@@ -1,0 +1,1 @@
+console.log("Andra JS-filen");
