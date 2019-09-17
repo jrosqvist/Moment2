@@ -1,1 +1,1 @@
-console.log("Test 1"),console.log("Test 2a");
+console.log("Första JS-filen"),console.log("Andra JS-filen");

@@ -16,11 +16,12 @@ const browserSync = require('browser-sync').create()
 const files = {
     htmlPath: "src/**/*.html",
     jsPath: "src/**/*.js",
-    cssPath: "src/**/*.css"
+    cssPath: "src/**/*.css",
+    imagesPath: "src/images/*"
 }
 
 // Task som kopierar alla html-filer
-function copyHtml() {
+function htmlTask() {
     // Plockar alla html-filer
     return src(files.htmlPath)
         // Pipe skickar filerna till destinationen "pub"
@@ -57,6 +58,12 @@ function cssTask() {
         .pipe(browserSync.stream());
 }
 
+// Task som kopierar filer från src och pipar vidare till pub-katalogen
+function imageTask () {
+    return src (files.imagesPath)
+       .pipe(dest("pub/images"));
+}
+
 // Watch lyssnar efter förändringar
 function watchTask() {
        // En konfigurationsfil för browser-sync skapas
@@ -66,9 +73,9 @@ function watchTask() {
         }
     });
     // Kikar om förändringar gjorts
-    watch([files.htmlPath, files.jsPath, files.cssPath],
+    watch([files.htmlPath, files.jsPath, files.cssPath, files.imagesPath],
         // Kollar efter html-, css- och js-filer samtidigt
-        parallel (copyHtml,jsTask, cssTask)
+        parallel (htmlTask,jsTask, cssTask, imageTask)
         // Laddar om sidan när någonting förändrats
         ).on('change', browserSync.reload);
 }
@@ -76,7 +83,7 @@ function watchTask() {
 // Gör dessa funktioner publika
 exports.default = series (
     // Dessa tre körs samtidigt
-    parallel (copyHtml, jsTask, cssTask),
+    parallel (htmlTask, jsTask, cssTask, imageTask),
     // Sedan körs watchTask
     watchTask
 );
