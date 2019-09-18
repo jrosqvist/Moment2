@@ -36,3 +36,7 @@ Den fjärde tasken kopierar bilder från arbetskatalogen till publiceringskatalo
 Den femte tasken, "watchTask", skaper en konfigurationsfil för browser-sync, 
 för att sedan lyssna efter förändringar i någon utav katalogerna med arbetsfiler.
 Görs en förändring laddas webbläsarfönstret om för att alltid visa uppdaterat innehåll.
+
+#### Export av funktioner
+Sist exporteras funktionerna, först körs de fyra filhanterings-taskarna,
+sedan watchTask.
